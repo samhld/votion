@@ -23,7 +23,7 @@ struct ContentView: View {
                             .font(.title)
                             .foregroundColor(.black)
                             .padding()
-                        ActionTile(action: {}, color: Color("Olive"), label: {
+                        ActionTile(action: {createPageInNotion()}, color: Color("Olive"), label: {
                             Label("Personal", systemImage: "person")
                         });
                         ActionTile(action: {}, color: Color("Olive").opacity(0.4), label: {
