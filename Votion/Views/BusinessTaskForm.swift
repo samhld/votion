@@ -55,6 +55,11 @@ struct BusinessTaskForm: View {
             TextEditor(text: $description)
                 .frame(height: 100)
                 .border(Color.gray, width: 1)
+            HStack {
+                Spacer()
+                SubmitButton(action: createPageInNotion)
+                Spacer()
+            }
         }
         .foregroundColor(.black)
         .padding()
