@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct PersonalTaskForm: View {
+struct BusinessTaskForm: View {
     @State private var name: String = ""
     @State private var startDate: Date = Date()
     @State private var isDatePickerShown: Bool = false
@@ -22,7 +22,7 @@ struct PersonalTaskForm: View {
                 VStack {
                     Image(systemName: "person")
                         .padding(.bottom, 10)
-                    Text("Create Personal Task")
+                    Text("Create Business Task")
                 }
                 .frame(maxWidth: .infinity, alignment: .center)
                 .padding(.bottom, 100)
@@ -95,8 +95,8 @@ struct PersonalTaskForm: View {
     }
 }
 
-struct PersonalTaskForm_Previews: PreviewProvider {
+struct BusinessTaskForm_Previews: PreviewProvider {
     static var previews: some View {
-        PersonalTaskForm()
+        BusinessTaskForm()
     }
 }

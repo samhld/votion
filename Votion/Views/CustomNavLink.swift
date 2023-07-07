@@ -8,41 +8,74 @@
 import SwiftUI
 
 
-struct CustomNavLink: View {
-    @State private var isActive: Bool = false
+struct CustomNavLink<Destination: View>: View {
     @State private var isPressed: Bool = false
+    let labelName: String
+    let color: Color = Color("Olive")
+    let icon: String
+    
+    let linkDestination: Destination
+    
     var body: some View {
-        NavigationStack {
             NavigationLink(
-                destination: PersonalTaskForm(),
+                destination: linkDestination,
+                isActive: $isPressed,
                 label: {
-                    Label("Peronsal", systemImage: "person")
+                    Button(action: {
+                        isPressed = true
+                    }) {
+                        VStack {
+                            Label(labelName, systemImage: icon)
+                                .foregroundColor(.black)
+                        }
+                        .frame(width: 250, height: 200)
+                        .background(
+                            RoundedRectangle(cornerRadius: 10)
+                                .fill(color)
+                        )
+                    }
+                    .buttonStyle(CustomNavigationButtonStyle(isActive: isPressed))
                 }
             )
+    }
+}
+
+struct CustomNavigationButtonStyle: ButtonStyle {
+    let isActive: Bool
+    
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .font(.largeTitle.bold())
+            .padding()
             .background(
                 RoundedRectangle(cornerRadius: 10)
                     .fill(Color("Olive"))
-                    .frame(width: 200, height: 200)
-                )
-            .scaleEffect(isPressed ? 0.98: 1.0)
-            .onTapGesture {
-                isActive = true
-                isPressed = true
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.03) {
-                    isPressed = false
-                }
-
-            }
-
-        }
-
+                    .scaleEffect(configuration.isPressed ? 0.98 : 1.0)
+            )
+            .cornerRadius(10)
+            .shadow(color: .gray, radius: 5, x: 2, y: 2) // Add animation modifier here if desired
     }
 }
+
 
 struct CustomNavLink_Previews: PreviewProvider {
     static var previews: some View {
-        CustomNavLink()
+        NavigationStack {
+            VStack {
+                CustomNavLink(
+                    labelName: "Personal",
+                    icon: "person",
+                    linkDestination: PersonalTaskForm())
+                .padding(20)
+                CustomNavLink(
+                    labelName: "Business",
+                    icon: "laptopcomputer.and.iphone",
+                    linkDestination: BusinessTaskForm())
+            }
+            .padding()
+        }
     }
 }
+
 
 
