@@ -12,6 +12,9 @@ struct PersonalTaskForm: View {
     @State private var startDate: Date = Date()
     @State private var isDatePickerShown: Bool = false
     @State private var description: String = ""
+    
+    @AppStorage("notiontoken") var notiontoken: String?
+    @AppStorage("databaseid") var databaseID: String?
         
     @State private var selectedDateString: String = ""
         
@@ -57,7 +60,13 @@ struct PersonalTaskForm: View {
                 .border(Color.gray, width: 1)
             HStack {
                 Spacer()
-                SubmitButton(action: createPageInNotion)
+                SubmitButton(action: {
+                    guard let key = notiontoken,
+                          let dbID = databaseID else {
+                        return
+                    }
+                    createPageInNotion(databaseID: dbID, apiKey: key)
+                })
                 Spacer()
             }
         }
