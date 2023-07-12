@@ -11,7 +11,7 @@ struct SubmitButton: View {
     let action: () -> Void
     
     var body: some View {
-        Button(action: createPageInNotion) {
+        Button(action: action) {
             Label("Submit Task", systemImage: "paperplane")
                 .font(Font.body.weight(.heavy))
                 .frame(width: 200, height: 50)
@@ -26,7 +26,10 @@ struct SubmitButton: View {
 
 struct SubmitButton_Previews: PreviewProvider {
     static var previews: some View {
-        SubmitButton(action: createPageInNotion)
+        SubmitButton(action: { createPageInNotion(
+            databaseID: "",
+            apiKey: "")
+        })
     }
 }
 

@@ -7,14 +7,19 @@
 
 import Foundation
 
-let notionToken = ""
-let createPageUrl = URL(string: "https://api.notion.com/v1/pages")!
-let databaseID = ""
 
-func createPageInNotion() -> Void {
+
+//let databaseID = ""
+
+func createPageInNotion(databaseID: String, apiKey: String) -> Void {
+
+    guard let createPageUrl = URL(string: "https://api.notion.com/v1/pages") else {
+        return
+    }
     var request = URLRequest(url: createPageUrl)
+
     request.httpMethod = "POST"
-    request.addValue("Bearer \(notionToken)", forHTTPHeaderField: "Authorization")
+    request.addValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
     request.addValue("application/json", forHTTPHeaderField: "Content-Type")
     request.addValue("2021-05-13", forHTTPHeaderField: "Notion-Version")
     
@@ -59,3 +64,4 @@ func createPageInNotion() -> Void {
     
     task.resume()
 }
+
