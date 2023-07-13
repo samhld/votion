@@ -1,29 +1,32 @@
+////
+////  PersonalTaskForm.swift
+////  Votion
+////
+////  Created by Sam Dillard on 7/5/23.
+////
 //
-//  PersonalTaskForm.swift
-//  Votion
-//
-//  Created by Sam Dillard on 7/5/23.
-//
-
 import SwiftUI
 
 struct BusinessTaskForm: View {
-    @State private var name: String = ""
-    @State private var startDate: Date = Date()
+
     @State private var isDatePickerShown: Bool = false
-    @State private var description: String = ""
-        
+    @State private var selectedDateString: String = ""
+    
+    @State private var input = TaskInput(
+        taskName: "",
+        startDate: Date(),
+        description: ""
+    )
+    
     @AppStorage("notiontoken") var notiontoken: String?
     @AppStorage("databaseid") var databaseID: String?
     
-    @State private var selectedDateString: String = ""
-        
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
             HStack {
                 Spacer()
                 VStack {
-                    Image(systemName: "person")
+                    Image(systemName: "laptopcomputer.and.iphone")
                         .padding(.bottom, 10)
                     Text("Create Business Task")
                 }
@@ -34,13 +37,10 @@ struct BusinessTaskForm: View {
             }
             Text("Task name")
                 .font(.headline)
-            
-            TextField("Enter task name", text: $name)
+            TextField("Enter task name", text: $input.taskName)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
-            
-            Text("Start Date")
+            Text("Start date")
                 .font(.headline)
-            
             TextField("Select start date", text: $selectedDateString, onEditingChanged: { isEditing in
                 if isEditing {
                     isDatePickerShown = true
@@ -51,12 +51,10 @@ struct BusinessTaskForm: View {
                 isDatePickerShown = true
             }
             .padding(.bottom, 8)
-            
             Text("Description")
                 .font(.headline)
-            
-            TextEditor(text: $description)
-                .frame(height: 100)
+            TextEditor(text: $input.description)
+                .frame(height: 80)
                 .border(Color.gray, width: 1)
             HStack {
                 Spacer()
@@ -65,7 +63,7 @@ struct BusinessTaskForm: View {
                           let dbID = databaseID else {
                         return
                     }
-                    createPageInNotion(databaseID: dbID, apiKey: key)
+                    createPageInNotion(databaseID: dbID, apiKey: key, data: input)
                 })
                 Spacer()
             }
@@ -86,15 +84,14 @@ struct BusinessTaskForm: View {
                         
                         DatePicker("", selection: Binding(
                             get: {
-                                let formatter = DateFormatter()
-                                formatter.dateStyle = .medium
-                                return formatter.date(from: selectedDateString) ?? Date()
+                                return input.startDate
                             },
                             set: { date in
+                                input.startDate = date
                                 let formatter = DateFormatter()
                                 formatter.dateStyle = .medium
                                 selectedDateString = formatter.string(from: date)
-                                startDate = date
+                                
                             }
                         ), displayedComponents: .date)
                         .datePickerStyle(WheelDatePickerStyle())
@@ -114,3 +111,4 @@ struct BusinessTaskForm_Previews: PreviewProvider {
         BusinessTaskForm()
     }
 }
+
