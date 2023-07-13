@@ -24,13 +24,13 @@ struct SubmitButton: View {
     }
 }
 
-struct SubmitButton_Previews: PreviewProvider {
-    static var previews: some View {
-        SubmitButton(action: { createPageInNotion(
-            databaseID: "",
-            apiKey: "")
-        })
-    }
-}
+//struct SubmitButton_Previews: PreviewProvider {
+//    static var previews: some View {
+//        SubmitButton(action: { createPageInNotion(
+//            databaseID: "",
+//            apiKey: "")
+//        })
+//    }
+//}
 
 

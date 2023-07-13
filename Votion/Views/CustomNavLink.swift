@@ -67,10 +67,10 @@ struct CustomNavLink_Previews: PreviewProvider {
                     icon: "person",
                     linkDestination: PersonalTaskForm())
                 .padding(20)
-                CustomNavLink(
-                    labelName: "Business",
-                    icon: "laptopcomputer.and.iphone",
-                    linkDestination: BusinessTaskForm())
+//                CustomNavLink(
+//                    labelName: "Business",
+//                    icon: "laptopcomputer.and.iphone",
+//                    linkDestination: BusinessTaskForm())
             }
             .padding()
         }
